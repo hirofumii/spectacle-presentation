@@ -1,7 +1,7 @@
 {
   "name": "spectacle-presentation",
   "version": "0.0.1",
-  "description": "Spectacle presentation",
+  "description": "Spectacle presentation based on custom themes and SWC",
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack",
