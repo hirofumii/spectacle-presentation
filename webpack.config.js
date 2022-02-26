@@ -3,15 +3,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// Customized babel loader with the minimum we need to get `mdx` libraries
-// working, which unfortunately codegen JSX instead of JS.
-const babelLoader = {
-  loader: require.resolve('babel-loader'),
+const swcLoader = {
+  loader: 'swc-loader',
   options: {
-    // Use user-provided .babelrc
-    babelrc: true,
-    // ... with some additional needed options.
-    presets: [require.resolve('@babel/preset-react')]
+    jsc: {
+      parser: {
+        jsx : true
+      },
+    }
   }
 };
 
@@ -33,21 +32,23 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: [babelLoader]
+        exclude: /(node_modules)/,
+        use: [swcLoader]
       },
       // `.md` files are processed as pure text.
       {
         test: /\.md$/,
-        use: [require.resolve('raw-loader')]
+        use: 'raw-loader'
       },
-      // `.mdx` files go through babel and our mdx transforming loader.
+      // `.mdx` files go through swc and our mdx transforming loader.
       {
         test: /\.mdx$/,
-        use: [babelLoader, require.resolve('spectacle-mdx-loader')]
+        exclude: /(node_modules)/,
+        use: [swcLoader, 'spectacle-mdx-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [require.resolve('file-loader')]
+        use: ['file-loader']
       }
     ]
   },
