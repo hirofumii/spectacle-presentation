@@ -1,23 +1,40 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+import { MDXProvider } from '@mdx-js/react';
+
 import {
   Box,
   Deck,
   FlexBox,
   FullScreen,
   Progress,
-  MarkdownSlideSet
+  Slide,
+  Notes,
+  mdxComponentMap
 } from 'spectacle';
 
 
-// SPECTACLE_CLI_MD_START
-import mdContent from './slides.md';
-// SPECTACLE_CLI_MD_END
+// SPECTACLE_CLI_MDX_START
+import slides, { notes } from './slides.mdx';
+// SPECTACLE_CLI_MDX_END
 
 
 // SPECTACLE_CLI_THEME_START
-const theme = {};
+const theme = {
+  colors: {
+    primary: '#ebe5da',
+    secondary: '#69e7fc',
+    tertiary: '#261660',
+    quaternary: '#fc6986',
+    quinary: '#8bddfd'
+  },
+  fonts: {
+    header: '"Noto Sans JP", Helvetica, Arial, sans-serif',
+    text: '"Noto Sans JP", Helvetica, Arial, sans-serif',
+    monospace: '"Consolas", "Menlo", monospace'
+  },
+};
 // SPECTACLE_CLI_THEME_END
 
 // SPECTACLE_CLI_TEMPLATE_START
@@ -39,9 +56,20 @@ const template = () => (
 // SPECTACLE_CLI_TEMPLATE_END
 
 const Presentation = () => (
-  <Deck theme={theme} template={template}>
-    <MarkdownSlideSet>{mdContent}</MarkdownSlideSet>
-  </Deck>
+  <MDXProvider components={mdxComponentMap}>
+    <Deck loop theme={theme} template={template}>
+      {slides
+        .map((MDXSlide, i) => [MDXSlide, notes[i]])
+        .map(([MDXSlide, MDXNote], i) => (
+          <Slide key={`slide-${i}`} slideNum={i}>
+            <MDXSlide />
+            <Notes>
+              <MDXNote />
+            </Notes>
+          </Slide>
+        ))}
+    </Deck>
+  </MDXProvider>
 );
 
 render(<Presentation />, document.getElementById('root'));
