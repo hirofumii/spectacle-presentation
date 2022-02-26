@@ -1,4 +1,13 @@
-# Spectacle Presentation (MD) 👋
+import { Text, CodePane } from 'spectacle';
+import Title from './components/title.tsx';
+
+<Title text="✨Title✨" subText="Sub text" />
+
+Notes: These are presenter notes.
+
+---
+
+# Spectacle Presentation (MDX) 👋
 
 These slides are bare Markdown with nothing special.
 
@@ -41,14 +50,12 @@ Typography
 
 ---
 
-```jsx
-import { createClient, Provider } from 'urql';
-
-const client = createClient({ url: 'https://0ufyz.sse.codesandbox.io' });
-
-const App = () => (
-  <Provider value={client}>
-    <Todos />
-  </Provider>
-);
-```
+<CodePane language="jsx">
+  {`
+    class SuperCoolComponent extends React.Component {
+      render() {
+        return <p>code slide works in markdown too whaaaaat</p>;
+      }
+    }
+`}
+</CodePane>
