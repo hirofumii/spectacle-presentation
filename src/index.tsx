@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from 'react-dom';
 
 import { MDXProvider } from '@mdx-js/react';
@@ -57,11 +56,11 @@ const template = () => (
 
 const Presentation = () => (
   <MDXProvider components={mdxComponentMap}>
-    <Deck loop theme={theme} template={template}>
+    <Deck theme={theme} template={template}>
       {slides
         .map((MDXSlide, i) => [MDXSlide, notes[i]])
         .map(([MDXSlide, MDXNote], i) => (
-          <Slide key={`slide-${i}`} slideNum={i}>
+          <Slide key={`slide-${i}`}>
             <MDXSlide />
             <Notes>
               <MDXNote />

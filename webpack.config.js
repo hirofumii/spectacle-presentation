@@ -3,16 +3,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const swcLoader = {
-  loader: 'swc-loader',
-  options: {
-    jsc: {
-      parser: {
-        jsx : true
-      },
-    }
+const swcLoaderBaseOpt = {
+  jsc: {
+    parser: {
+      syntax: 'typescript',
+      tsx: true,
+    },
   }
 };
+
 
 /**
  * Base configuration for the CLI, core, and examples.
@@ -20,7 +19,7 @@ const swcLoader = {
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js', // Default for boilerplate generation.
+  entry: './src/index.tsx', // Default for boilerplate generation.
   output: {
     path: path.resolve('dist'),
     filename: 'deck.js'
@@ -31,9 +30,21 @@ module.exports = {
     // within _this_ project's `node_modules` traversal tree.
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.tsx?$/,
         exclude: /(node_modules)/,
-        use: [swcLoader]
+        use: [{
+          loader: 'swc-loader',
+          options: {
+            jsc: {
+              ...swcLoaderBaseOpt.jsc,
+              "transform": {
+                "react": {
+                  runtime: "automatic",
+                },
+              }
+            }
+          }
+        }]
       },
       // `.md` files are processed as pure text.
       {
@@ -44,7 +55,10 @@ module.exports = {
       {
         test: /\.mdx$/,
         exclude: /(node_modules)/,
-        use: [swcLoader, 'spectacle-mdx-loader']
+        use: [{
+          loader: 'swc-loader',
+          options: swcLoaderBaseOpt
+        }, 'spectacle-mdx-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
