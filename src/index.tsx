@@ -24,11 +24,6 @@ const theme = {
     quaternary: '#fc6986',
     quinary: '#8bddfd',
   },
-  fonts: {
-    header: '"Noto Sans JP", Helvetica, Arial, sans-serif',
-    text: '"Noto Sans JP", Helvetica, Arial, sans-serif',
-    monospace: '"Consolas", "Menlo", monospace',
-  },
 };
 // SPECTACLE_CLI_THEME_END
 

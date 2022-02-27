@@ -1,6 +1,8 @@
-# Spectacle Boilerplate
+# Spectacle Boilerplate SWC
 
-Spectacle presentation based on custom themes and SWC
+[Spectacle](https://github.com/FormidableLabs/spectacle) Boilerplate based on SWC for high speed.
+
+![Screen Shot 2022-02-27 at 12 17 59](https://user-images.githubusercontent.com/7459529/155866744-b1c9f04a-f8fd-460d-be21-ad27a47a656b.png)
 
 ## Useage
 
